@@ -14,5 +14,5 @@ To download the most recent code from [PintOS-OS](https://pintos-os.org/) direct
 
 ## Installation Guidelines
 
-To install PintOS please use the guidelines list at the [installation document](Installation.md).
+To install PintOS please use the guidelines listed at the [installation document](Installation.md).
 

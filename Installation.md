@@ -12,8 +12,6 @@ To be added & tested in the future:
 
 ## Required Dependencies
 
-------
-
 Check whether your machine is 32-bit or 64 bit:
 
 * If the output is i686 or i386, then the machine is 32-bit.
@@ -87,8 +85,6 @@ sudo apt-get install git
 
 ## Qemu Installation
 
-------
-
 Download Qemu project
 
 ```shell
@@ -158,8 +154,6 @@ which qemu
 ```
 
 ## PintOS Installation
-
-------
 
 **Any refer to $PINTOSHOME should be replaced with pintos absolute path, for example $PINTOSHOME -> /home/vm/pintos/ if username is vm.**
 
@@ -243,8 +237,6 @@ make grade
 ```
 
 ## Common Problems
-
-------
 
 1. `pintos.pm` and `pintos`, don't use variables. Use absolute paths directly. so "my $name = find_file ('$PINTOSHOME/src/threads/build/kernel.bin');" is wrong, instead you should write the absolute path for-exampe "my $name = find_file ('/usr/username/pintos/src/threads/build/kernel.bin');".
 
