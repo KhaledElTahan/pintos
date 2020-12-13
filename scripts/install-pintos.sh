@@ -27,6 +27,13 @@ make
 
 # ignore any warnings :D
 
+# If you're using Ubuntu 20, you might have the following error:
+# stropts.h No such file or header
+# Simply ignore squish-pty (remove its entities from the makefile) and delete the header from squish-unix and it should work fine
+# Then run the make command again
+# In pintos perl utility, only bochs depends on squish-pty so if you are using qemu this should not matter to you.
+
+
 # Set Qemu as Your Simulator
 # edit $PINTOSHOME/src/threads/Make.vars and change the line SIMULATOR = --bochs to SIMULATOR = --qemu
 

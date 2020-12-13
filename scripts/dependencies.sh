@@ -28,6 +28,7 @@ sudo apt-get install libxrandr-dev
 sudo apt-get install libxi-dev
 sudo apt-get install libnfs-dev libiscsi-dev
 sudo apt-get install libc6-dbg gdb valgrind
+sudo apt-get install ninja-build
 
 # Perl. Version 5.8.0 or later is preferred. Version 5.6.1 or later should work
 sudo apt-get upgrade perl
