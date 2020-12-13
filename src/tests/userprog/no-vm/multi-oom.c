@@ -27,8 +27,6 @@
 static const int EXPECTED_DEPTH_TO_PASS = 30;
 static const int EXPECTED_REPETITIONS = 10;
 
-const char *test_name = "multi-oom";
-
 enum child_termination_mode { RECURSE, CRASH };
 
 /* Spawn a recursive copy of ourselves, passing along instructions
@@ -67,15 +65,15 @@ consume_some_resources_and_die (int seed)
 {
   consume_some_resources ();
   random_init (seed);
-  int *PHYS_BASE = (int *)0xC0000000;
+  volatile int *PHYS_BASE = (volatile int *)0xC0000000;
 
   switch (random_ulong () % 5)
     {
       case 0:
-        *(int *) NULL = 42;
+        *(volatile int *) NULL = 42;
 
       case 1:
-        return *(int *) NULL;
+        return *(volatile int *) NULL;
 
       case 2:
         return *PHYS_BASE;
@@ -106,6 +104,8 @@ int
 main (int argc, char *argv[])
 {
   int n;
+
+  test_name = "multi-oom";
 
   n = argc > 1 ? atoi (argv[1]) : 0;
   bool is_at_root = (n == 0);
