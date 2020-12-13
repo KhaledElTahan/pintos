@@ -9,12 +9,11 @@ echo "export PATH=~/pintos/src/utils:$PATH" >> ~/.bashrc
 # Reload environment variables
 source ~/.bashrc
 
-sudo apt-get install libc6-dbg gdb valgrind
-
 # GDBMACROS
 # Edit $PINTOSHOME/src/utils/pintos-gdb to change the definition of GDBMACROS to
-# point to where you installed gdb-macros. Test the installation by running pintos-gdb without
-# any arguments. If it does not complain about missing gdb-macros, it is installed correctly.
+# point to where you installed gdb-macros. Test the installation by running
+pintos-gdb 
+# without any arguments. If it does not complain about missing gdb-macros, it is installed correctly.
 # Change this line GDBMACROS=/usr/class/cs140/pintos/pintos/src/misc/gdb-macros to
 # GDBMACROS=$PINTOSHOME/src/misc/gdb-macros.
 # Example: GDBMACROS=/home/ubuntu/pintos/src/misc/gdb-macros
@@ -37,16 +36,13 @@ make
 # A new "build" directory will be created as a sub-directory of: $PINTOSHOME/src/threads/
 
 
-# Edit util Files
-# edit $PINTOSHOME/src/utils/pintos by replacing $sim = "bochs" if !defined $sim; in line
-# number 103 with $sim = "qemu" if !defined $sim;.
-# also in the same file line 621, change my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
-
-# Edit $PINTOSHOME/src/utils/pintos by replacing kernel.bin in line number 257 with
-# the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
-
-# Edit $PINTOSHOME/src/utils/Pintos.pm by replacing loader.bin in line number 362
-# with the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
+###### Edit util Files
+## $PINTOSHOME/src/utils/pintos 
+# line 103: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
+# line 621: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
+# line 257: from kernel.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
+## $PINTOSHOME/src/utils/Pintos.pm 
+# line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
 
 # change pintos permissions
 cd $PINTOSHOME/src/utils
