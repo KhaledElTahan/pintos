@@ -5,6 +5,7 @@
 
 # Add PINTOSHOME to path variable 
 echo "export PATH=~/pintos/src/utils:$PATH" >> ~/.bashrc
+# Assuming of course, that pintos is in the ~/ directory
 
 # Reload environment variables
 source ~/.bashrc
@@ -62,4 +63,5 @@ make grade
 # qemu might not be installed correctly, try removing "qemu" from /bin and 
 # re running the command "sudo ln -s $HOME/apps/qemu/x86_64-softmmu/qemu-system-x86_64 /bin/qemu"
 
-# You might copy the command directly from the pdf and the "_" was discarded. Make sure you've written has the _ in x86_64
+# You might copy the command directly from the pintrosIntro.pdf and the "_" was discarded.
+# Make sure you've written has the _ in x86_64
