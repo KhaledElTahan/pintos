@@ -135,8 +135,8 @@ make
 
 Test you Qemu build by the listing directories of the built first.
 
-* For 64-bit machines, a directory with name `x86_64-softmmu` will be present.
-* For 32-bit machines, a directory with name `i386-softmmu` will be present.
+* For 64-bit machines, a directory with name `x86_64-softmmu` should be present.
+* For 32-bit machines, a directory with name `i386-softmmu` should be present.
 
 ```shell
 cd $HOME/apps/qemu/bin/debug/native/
@@ -145,14 +145,14 @@ ls
 
 Check whether each the Qemu binary exists inside the build directoy.
 
-* For 64-bit machines, an executable with name `qemu-system-x86_64` will be present.
+* For 64-bit machines, an executable with name `qemu-system-x86_64` should be present.
 
 ```shell
 cd $HOME/apps/qemu/bin/debug/native/x86_64-softmmu
 ls
 ```
 
-* For 32-bit machines, a executable with name `qemu-system-i386` will be present.
+* For 32-bit machines, an executable with name `qemu-system-i386` should be present.
 
 ```shell
 cd $HOME/apps/qemu/bin/debug/native/i386-softmmu
