@@ -31,6 +31,21 @@ git submodule update --init dtc
 
 make
 
+# Test your build by
+cd $HOME/apps/qemu/bin/debug/native
+
+# For 64-bit machines
+cd x86_64-softmmu
+
+# For 32-bit machines
+cd i386-softmmu
+
+# then list files, you should find executable qemu-system-x86_64 for 64bit machines and
+# executable qemu-system-i386 for 32bits machines
+ls
+
+# Create a link from the executable binary to be called via /bin/qemu
+
 # For 64-bit machines
 sudo ln -s $HOME/apps/qemu/bin/debug/native/x86_64-softmmu/qemu-system-x86_64 /bin/qemu
 

@@ -133,6 +133,32 @@ Build Qemu
 make
 ```
 
+Test you Qemu build by the listing directories of the built first.
+
+* For 64-bit machines, a directory with name `x86_64-softmmu` will be present.
+* For 32-bit machines, a directory with name `i386-softmmu` will be present.
+
+```shell
+cd $HOME/apps/qemu/bin/debug/native/
+ls
+```
+
+Check whether each the Qemu binary exists inside the build directoy.
+
+* For 64-bit machines, an executable with name `qemu-system-x86_64` will be present.
+
+```shell
+cd $HOME/apps/qemu/bin/debug/native/x86_64-softmmu
+ls
+```
+
+* For 32-bit machines, a executable with name `qemu-system-i386` will be present.
+
+```shell
+cd $HOME/apps/qemu/bin/debug/native/i386-softmmu
+ls
+```
+
 Make a link of the built Qemu binary inside the /bin to be able to use it from scripts.
 
 * For 64-bit machines
@@ -145,6 +171,13 @@ sudo ln -s $HOME/apps/qemu/bin/debug/native/x86_64-softmmu/qemu-system-x86_64 /b
 
 ```shell
 sudo ln -s $HOME/apps/qemu/bin/debug/native/i386-softmmu/qemu-system-i386 /bin/qemu
+```
+
+Note: If an error "/bin/qemu already exists" arises from last command, do the following command which removes /bin/qemu then repeat the above ln command again.
+
+```shell
+sudo rm /bin/qemu
+REPEAT the above sudo ln -s ... command
 ```
 
 Check that Qemu installed correctly, the following command should print the path of Qemu /bin/qemu
@@ -221,11 +254,11 @@ $PINTOSHOME/src/utils/Pintos.pm
 line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
 ```
 
-Change pintos script permissions.
+Change all pintos files permissions.
 
 ```shell
-cd $PINTOSHOME/src/utils
-chmod 777 pintos
+cd $PINTOSHOME
+chmod -R 777 ./
 ```
 
 Run Pintos & Test your installation.

@@ -52,9 +52,9 @@ make
 ## $PINTOSHOME/src/utils/Pintos.pm 
 # line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
 
-# change pintos permissions
-cd $PINTOSHOME/src/utils
-chmod 777 pintos
+# Change all pintos files permissions.
+cd $PINTOSHOME
+chmod -R 777 ./
 
 # Run pintos
 pintos run alarm-multiple
