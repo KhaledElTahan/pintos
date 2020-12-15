@@ -202,6 +202,12 @@ Reload environment variables.
 source ~/.bashrc
 ```
 
+Test your pintos path installation. Run the following command, the full absolute path of pintos script should be printed. For example the output might be "/home/vm/pintos/src/utils/pintos".
+
+```shell
+which pintos
+```
+
 GDBMACROS
 
 Edit $PINTOSHOME/src/utils/pintos-gdb to change the definition of GDBMACROS to
