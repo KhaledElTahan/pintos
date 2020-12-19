@@ -16,3 +16,8 @@ To download the most recent code from [PintOS-OS](https://pintos-os.org/) direct
 
 To install PintOS please use the guidelines listed at the [installation document](Installation.md).
 
+## Sessions' Videos
+
+Here's a list of sessions I made (in Arabic) for Alexandria University, explaining PintOS & its phases requirements:
+
+1. [Phase 1 Requirements](https://youtu.be/RLx_0nnEjaM)
