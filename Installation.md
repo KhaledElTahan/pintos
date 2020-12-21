@@ -239,7 +239,7 @@ Set Qemu as Your Simulator.
 $PINTOSHOME/src/threads/Make.vars and change the line SIMULATOR = --bochs to SIMULATOR = --qemu
 ```
 
-Disable compiler optimizations. Needed for phase2 to avoid compiler optimizations on user programs stac, which might lead to many unexpected error.
+Disable compiler optimizations. Needed for phase 2 to avoid compiler optimizations on user programs' stack, which might lead to many unexpected errors.
 
 ```
 Edit $PINTOSHOME/src/Make.config
