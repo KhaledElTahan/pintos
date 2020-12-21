@@ -239,6 +239,14 @@ Set Qemu as Your Simulator.
 $PINTOSHOME/src/threads/Make.vars and change the line SIMULATOR = --bochs to SIMULATOR = --qemu
 ```
 
+Disable compiler optimizations. Needed for phase2 to avoid compiler optimizations on user programs stac, which might lead to many unexpected error.
+
+```
+Edit $PINTOSHOME/src/Make.config
+Line 43: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
+i.e. add 0 to the end of line 43
+```
+
 Compile Pintos Kernel, as a result a new "build" directory will be created as a sub-directory of: $PINTOSHOME/src/threads/.
 
 ```shell
