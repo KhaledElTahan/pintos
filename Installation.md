@@ -268,6 +268,16 @@ $PINTOSHOME/src/utils/Pintos.pm
 line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
 ```
 
+Note: now loader and kernel point to `phase 1` executables, if you're working on any next phase you need to change them to reflect the new phase. For example, if you're working on `phase 2`, do the following.
+
+```
+Edit $PINTOSHOME/src/utils/pintos 
+line 257: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/kernel.bin
+
+Edit $PINTOSHOME/src/utils/Pintos.pm 
+line 362: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/loader.bin
+```
+
 Change all pintos files permissions.
 
 ```shell
