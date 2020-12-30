@@ -34,3 +34,4 @@ To install PintOS please use the guidelines listed at the [installation document
 Here's a list of sessions I made (in Arabic) for Alexandria University, explaining PintOS & its phases requirements:
 
 1. [Phase 1 Requirements](https://youtu.be/RLx_0nnEjaM)
+2. [Phase 2 Requirements](https://youtu.be/bFUmvVgmbOs)
