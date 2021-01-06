@@ -263,9 +263,7 @@ Point to phase 1 `pintos` and `pintos.pm` by changing kernel and loader to absol
 ```
 $PINTOSHOME/src/utils/pintos 
 line 257: from kernel.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
-```
 
-```
 $PINTOSHOME/src/utils/Pintos.pm 
 line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
 ```
@@ -372,10 +370,10 @@ Point to phase 4 `pintos` and `pintos.pm`
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
-line 257: from 'vm' to 'userprog': $PINTOSHOME/src/filesys/build/kernel.bin
+line 257: from 'vm' to 'filesys': $PINTOSHOME/src/filesys/build/kernel.bin
 
 Edit $PINTOSHOME/src/utils/Pintos.pm 
-line 362: from 'vm' to 'userprog': $PINTOSHOME/src/filesys/build/loader.bin
+line 362: from 'vm' to 'filesys': $PINTOSHOME/src/filesys/build/loader.bin
 ```
 
 Change all pintos files permissions.
