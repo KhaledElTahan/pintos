@@ -55,7 +55,7 @@ sudo apt-get install libx11-dev
 sudo apt-get install libxrandr-dev
 sudo apt-get install libxi-dev
 sudo apt-get install libnfs-dev libiscsi-dev
-sudo apt-get install libc6-dbg gdb valgrind
+sudo apt-get install valgrind
 sudo apt-get install ninja-build
 ```
 
@@ -233,18 +233,22 @@ cd $PINTOSHOME/src/utils
 make
 ```
 
-Set Qemu as Your Simulator.
+Point to qemu in pintos perl script
+
+```
+$PINTOSHOME/src/utils/pintos 
+line 103: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
+line 621: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
+```
+
+Now you need to do **only** the part related to the phase you're currently working on.
+
+### Phase 1 Installation
+
+Set Qemu as phase 1 simulator.
 
 ```
 $PINTOSHOME/src/threads/Make.vars and change the line SIMULATOR = --bochs to SIMULATOR = --qemu
-```
-
-Disable compiler optimizations. Needed for phase 2 to avoid compiler optimizations on user programs' stack, which might lead to many unexpected errors.
-
-```
-Edit $PINTOSHOME/src/Make.config
-Line 43: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
-i.e. add 0 to the end of line 43
 ```
 
 Compile Pintos Kernel, as a result a new "build" directory will be created as a sub-directory of: $PINTOSHOME/src/threads/.
@@ -254,31 +258,16 @@ cd $PINTOSHOME/src/threads/
 make
 ```
 
-Edit util Files
+Point to phase 1 `pintos` and `pintos.pm` by changing kernel and loader to absolute path of phase 1 kernel and loader.
 
 ```
 $PINTOSHOME/src/utils/pintos 
-line 103: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
-line 621: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
 line 257: from kernel.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
 ```
 
 ```
 $PINTOSHOME/src/utils/Pintos.pm 
 line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
-```
-
-Note: now loader and kernel point to `phase 1` executables, if you're working on any next phase you need to compile the new phase, then change loader and kernel path to reflect the new phase. For example, if you're working on `phase 2`, do the following.
-
-```
-cd $PINTOSHOME/src/userprog/
-make
-
-Edit $PINTOSHOME/src/utils/pintos 
-line 257: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/kernel.bin
-
-Edit $PINTOSHOME/src/utils/Pintos.pm 
-line 362: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/loader.bin
 ```
 
 Change all pintos files permissions.
@@ -293,6 +282,113 @@ Run Pintos & Test your installation.
 ```shell
 pintos run alarm-multiple
 cd $PINTOSHOME/src/threads
+make grade
+```
+
+### Phase 2 Installation
+
+Disable compiler optimizations to avoid compiler optimizations on user programs' stack, which might lead to many unexpected errors.
+
+```
+Edit $PINTOSHOME/src/Make.config
+Line 43: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
+i.e. add 0 to the end of line 43
+```
+
+Compile phase 2
+
+```shell
+cd $PINTOSHOME/src/userprog/
+make
+```
+
+Point to phase 2 `pintos` and `pintos.pm`
+
+```
+Edit $PINTOSHOME/src/utils/pintos 
+line 257: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/kernel.bin
+
+Edit $PINTOSHOME/src/utils/Pintos.pm 
+line 362: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/loader.bin
+```
+
+Change all pintos files permissions.
+
+```shell
+cd $PINTOSHOME
+chmod -R 777 ./
+```
+
+Test your installation.
+
+```shell
+cd $PINTOSHOME/src/userprog
+make grade
+```
+
+### Phase 3 Installation
+
+Compile phase 3
+
+```shell
+cd $PINTOSHOME/src/vm/
+make
+```
+
+Point to phase 3 `pintos` and `pintos.pm`
+
+```
+Edit $PINTOSHOME/src/utils/pintos 
+line 257: from 'userprog' to 'vm': $PINTOSHOME/src/vm/build/kernel.bin
+
+Edit $PINTOSHOME/src/utils/Pintos.pm 
+line 362: from 'userprog' to 'vm': $PINTOSHOME/src/vm/build/loader.bin
+```
+
+Change all pintos files permissions.
+
+```shell
+cd $PINTOSHOME
+chmod -R 777 ./
+```
+
+Test your installation.
+
+```shell
+cd $PINTOSHOME/src/vm
+make grade
+```
+
+### Phase 4 Installation
+
+Compile phase 4
+
+```shell
+cd $PINTOSHOME/src/filesys/
+make
+```
+
+Point to phase 4 `pintos` and `pintos.pm`
+
+```
+Edit $PINTOSHOME/src/utils/pintos 
+line 257: from 'vm' to 'userprog': $PINTOSHOME/src/filesys/build/kernel.bin
+
+Edit $PINTOSHOME/src/utils/Pintos.pm 
+line 362: from 'vm' to 'userprog': $PINTOSHOME/src/filesys/build/loader.bin
+```
+
+Change all pintos files permissions.
+
+```shell
+cd $PINTOSHOME
+chmod -R 777 ./
+```
+
+Test your installation.
+
+```shell
+cd $PINTOSHOME/src/filesys
 make grade
 ```
 
