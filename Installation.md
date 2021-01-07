@@ -85,7 +85,7 @@ sudo apt-get install git
 
 ## Qemu Installation
 
-Download Qemu project
+Download Qemu project.
 
 ```shell
 mkdir $HOME/apps
@@ -103,13 +103,13 @@ cd bin/debug/native
 
 Cinfugure your installation:
 
-* For 64-bit machines
+* For 64-bit machines:
 
 ```shell
 ../../../configure --target-list=x86_64-softmmu --enable-debug
 ```
 
-* For 32-bit machines
+* For 32-bit machines:
 
 ```shell
 ../../../configure --target-list=i386-softmmu --enable-debug 
@@ -127,13 +127,13 @@ If you get this error "DTC (libfdt) version >= 1:4:0 not present.", execute the 
 git submodule update --init dtc
 ```
 
-Build Qemu
+Build Qemu.
 
 ```shell
 make
 ```
 
-Test you Qemu build by the listing directories of the built first.
+Test your Qemu build by the listing directories of the built first.
 
 * For 64-bit machines, a directory with name `x86_64-softmmu` should be present.
 * For 32-bit machines, a directory with name `i386-softmmu` should be present.
@@ -161,13 +161,13 @@ ls
 
 Make a link of the built Qemu binary inside the /bin to be able to use it from scripts.
 
-* For 64-bit machines
+* For 64-bit machines:
 
 ```shell
 sudo ln -s $HOME/apps/qemu/bin/debug/native/x86_64-softmmu/qemu-system-x86_64 /bin/qemu
 ```
 
-* For 32-bit machines
+* For 32-bit machines:
 
 ```shell
 sudo ln -s $HOME/apps/qemu/bin/debug/native/i386-softmmu/qemu-system-i386 /bin/qemu
@@ -180,7 +180,7 @@ sudo rm /bin/qemu
 REPEAT the above sudo ln -s ... command
 ```
 
-Check that Qemu installed correctly, the following command should print the path of Qemu /bin/qemu
+Check that Qemu has been installed correctly, the following command should print the path of Qemu /bin/qemu
 
 ```shell
 which qemu
@@ -236,7 +236,7 @@ make
 Point to qemu in pintos perl script
 
 ```
-$PINTOSHOME/src/utils/pintos 
+Edit $PINTOSHOME/src/utils/pintos 
 line 103: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
 line 621: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
 ```
@@ -248,7 +248,8 @@ Now you need to do **only** the part related to the phase you're currently worki
 Set Qemu as phase 1 simulator.
 
 ```
-$PINTOSHOME/src/threads/Make.vars and change the line SIMULATOR = --bochs to SIMULATOR = --qemu
+Edit $PINTOSHOME/src/threads/Make.vars
+line 7: from SIMULATOR = --bochs to SIMULATOR = --qemu
 ```
 
 Compile Pintos Kernel, as a result a new "build" directory will be created as a sub-directory of: $PINTOSHOME/src/threads/.
@@ -293,14 +294,14 @@ Line 43: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
 i.e. add 0 to the end of line 43
 ```
 
-Compile phase 2
+Compile phase 2.
 
 ```shell
 cd $PINTOSHOME/src/userprog/
 make
 ```
 
-Point to phase 2 `pintos` and `pintos.pm`
+Point to phase 2 `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
@@ -326,14 +327,14 @@ make grade
 
 ### Phase 3 Installation
 
-Compile phase 3
+Compile phase 3.
 
 ```shell
 cd $PINTOSHOME/src/vm/
 make
 ```
 
-Point to phase 3 `pintos` and `pintos.pm`
+Point to phase 3 `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
@@ -359,14 +360,14 @@ make grade
 
 ### Phase 4 Installation
 
-Compile phase 4
+Compile phase 4.
 
 ```shell
 cd $PINTOSHOME/src/filesys/
 make
 ```
 
-Point to phase 4 `pintos` and `pintos.pm`
+Point to phase 4 `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
