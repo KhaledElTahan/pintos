@@ -259,7 +259,7 @@ cd $PINTOSHOME/src/threads/
 make
 ```
 
-Point to phase 1 `pintos` and `pintos.pm` by changing kernel and loader to absolute path of phase 1 kernel and loader.
+Point to phase 1's kernel & loader in `pintos` and `pintos.pm`, by changing the path of both kernel & loader to absolute path of phase 1's kernel & loader.
 
 ```
 $PINTOSHOME/src/utils/pintos 
@@ -301,7 +301,7 @@ cd $PINTOSHOME/src/userprog/
 make
 ```
 
-Point to phase 2 `pintos` and `pintos.pm`.
+Point to phase 2's kernel & loader in `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
@@ -334,7 +334,7 @@ cd $PINTOSHOME/src/vm/
 make
 ```
 
-Point to phase 3 `pintos` and `pintos.pm`.
+Point to phase 3's kernel & loader in `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
@@ -367,7 +367,7 @@ cd $PINTOSHOME/src/filesys/
 make
 ```
 
-Point to phase 4 `pintos` and `pintos.pm`.
+Point to phase 4's kernel & loader in `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
