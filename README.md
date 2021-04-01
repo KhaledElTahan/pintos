@@ -29,6 +29,15 @@ To download the most recent code from [PintOS-OS](https://pintos-os.org/) direct
 
 To install PintOS please use the guidelines listed at the [installation document](Installation.md).
 
+## Project Documents
+
+The following is a list of the documents to explain and document the project and its requirements.
+
+1. [PintOS Official Document](guides/PintOS&#32;Official&#32;Document.pdf): The main official documentation and project requirements compiled from PintOS repository provided by Stanford University.
+2. [CSCI 350 - PintOS Guide](guides/CSCI&#32;350&#32;-&#32;Pintos&#32;Guide.pdf): A simple read for PintOS code and its requirement provided from [University of Southern California OS Course](http://bits.usc.edu/cs350/).
+3. [The Pintos Instructional Operating System Kernel (PintOS Paper)](guides/The&#32;Pintos&#32;Instructional&#32;Operating&#32;System&#32;Kernel.pdf): A good reading for instructors.
+4. [The Pintos Instructional Operating System Kernel (PintOS Presentation)](guides/SIGCSE2009-Pintos.pdf): A good reading for instructors.
+
 ## Sessions' Videos
 
 Here's a list of sessions I made (in Arabic) for Alexandria University, explaining PintOS & its phases requirements:
