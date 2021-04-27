@@ -1,0 +1,135 @@
+diff -ru bochs-2.6.11.dist/bochs.h bochs-2.6.11/bochs.h
+--- bochs-2.6.11.dist/bochs.h	2019-12-19 23:42:07.299552000 -0800
++++ bochs-2.6.11/bochs.h	2021-01-17 17:28:08.093933541 -0800
+@@ -409,6 +409,7 @@
+ void bx_gdbstub_init(void);
+ void bx_gdbstub_break(void);
+ int bx_gdbstub_check(unsigned int eip);
++void bx_gdbstub_exception(unsigned int nr);
+ #define GDBSTUB_STOP_NO_REASON   (0xac0)
+ 
+ #if BX_SUPPORT_SMP
+@@ -664,4 +665,6 @@
+ 
+ #endif
+ 
++extern int jitter;
++
+ #endif  /* BX_BOCHS_H */
+Only in bochs-2.6.11: bochs.h.orig
+diff -ru bochs-2.6.11.dist/cpu/exception.cc bochs-2.6.11/cpu/exception.cc
+--- bochs-2.6.11.dist/cpu/exception.cc	2019-12-26 08:48:33.074097000 -0800
++++ bochs-2.6.11/cpu/exception.cc	2021-01-17 17:28:08.093933541 -0800
+@@ -991,6 +991,10 @@
+ 
+   BX_CPU_THIS_PTR last_exception_type = exception_type;
+ 
++#if BX_GDBSTUB
++  bx_gdbstub_exception(vector);
++#endif
++
+   if (real_mode()) {
+     push_error = 0; // not INT, no error code pushed
+     error_code = 0;
+Only in bochs-2.6.11/cpu: exception.cc.orig
+diff -ru bochs-2.6.11.dist/gdbstub.cc bochs-2.6.11/gdbstub.cc
+--- bochs-2.6.11.dist/gdbstub.cc	2017-03-06 13:30:05.467768000 -0800
++++ bochs-2.6.11/gdbstub.cc	2021-01-17 17:28:35.270952903 -0800
+@@ -50,6 +50,7 @@
+ #define GDBSTUB_EXECUTION_BREAKPOINT    (0xac1)
+ #define GDBSTUB_TRACE                   (0xac2)
+ #define GDBSTUB_USER_BREAK              (0xac3)
++#define GDBSTUB_EXCEPTION_0E            (0xac4)
+ 
+ static bx_list_c *gdbstub_list;
+ static int listen_socket_fd;
+@@ -319,6 +320,12 @@
+   return GDBSTUB_STOP_NO_REASON;
+ }
+ 
++void bx_gdbstub_exception(unsigned int nr)
++{
++    if (nr == 0x0e)
++        last_stop_reason = GDBSTUB_EXCEPTION_0E;
++}
++
+ static int remove_breakpoint(Bit64u addr, int len)
+ {
+   if (len != 1)
+@@ -489,6 +496,10 @@
+         {
+           write_signal(&buf[1], SIGTRAP);
+         }
++        else if (last_stop_reason == GDBSTUB_EXCEPTION_0E)
++        {
++          write_signal(&buf[1], SIGSEGV);
++        }
+         else
+         {
+           write_signal(&buf[1], 0);
+@@ -516,6 +527,10 @@
+         {
+           write_signal(&buf[1], SIGTRAP);
+         }
++        else if (last_stop_reason == GDBSTUB_EXCEPTION_0E)
++        {
++          write_signal(&buf[1], SIGSEGV);
++        }
+         else
+         {
+           write_signal(&buf[1], SIGTRAP);
+Only in bochs-2.6.11: gdbstub.cc.orig
+Only in bochs-2.6.11: gdbstub.cc~
+diff -ru bochs-2.6.11.dist/iodev/pit82c54.cc bochs-2.6.11/iodev/pit82c54.cc
+--- bochs-2.6.11.dist/iodev/pit82c54.cc	2018-05-14 11:17:04.955283000 -0700
++++ bochs-2.6.11/iodev/pit82c54.cc	2021-01-17 17:28:08.097266918 -0800
+@@ -49,6 +49,7 @@
+ 
+ #include "iodev.h"
+ #include "pit82c54.h"
++#include <stdlib.h>
+ #define LOG_THIS this->
+ 
+ 
+@@ -410,7 +411,14 @@
+       case 2:
+         if (thisctr.count_written) {
+           if (thisctr.triggerGATE || thisctr.first_pass) {
+-            set_count(thisctr, thisctr.inlatch);
++            //set_count(thisctr, thisctr.inlatch);
++            unsigned n = thisctr.inlatch;
++            if (jitter && n > 5) {
++                n *= (double) rand() / RAND_MAX;
++                if (n < 5)
++                    n = 5;
++            }
++            set_count(thisctr, n);
+             thisctr.next_change_time=(thisctr.count_binary-1) & 0xFFFF;
+             thisctr.null_count=0;
+             if (thisctr.inlatch==1) {
+diff -ru bochs-2.6.11.dist/main.cc bochs-2.6.11/main.cc
+--- bochs-2.6.11.dist/main.cc	2020-01-02 08:19:02.083668000 -0800
++++ bochs-2.6.11/main.cc	2021-01-17 17:28:08.097266918 -0800
+@@ -94,6 +94,7 @@
+ BOCHSAPI BX_MEM_C bx_mem;
+ 
+ char *bochsrc_filename = NULL;
++int jitter = 0;
+ 
+ size_t bx_get_timestamp(char *buffer)
+ {
+@@ -705,6 +706,13 @@
+       else SIM->get_param_string(BXPN_DEBUGGER_LOG_FILENAME)->set(argv[arg]);
+     }
+ #endif
++    else if (!strcmp ("-j", argv[arg])) {
++      if (++arg >= argc) BX_PANIC(("-j must be followed by a number"));
++      else {
++        jitter = 1;
++        srand (atoi (argv[arg]));
++      }
++    }
+     else if (!strcmp("-f", argv[arg])) {
+       if (++arg >= argc) BX_PANIC(("-f must be followed by a filename"));
+       else bochsrc_filename = argv[arg];
+Only in bochs-2.6.11: main.cc.orig

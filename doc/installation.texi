@@ -144,66 +144,40 @@ passed to it.)  In each case, the X, terminal, and ``no GUI'' interfaces
 should be configured, by passing @option{--with-x --with-x11 --with-term
 --with-nogui} to @command{configure}.
 
-This version of Pintos is designed for use with Bochs 2.2.6.  A number
+This version of Pintos is designed for use with Bochs 2.6.11.  A number
 of patches for this version of Bochs are included in @file{src/misc}:
 
 @table @file
-@item bochs-2.2.6-big-endian.patch
+@item bochs-2.6.11-banner-stderr.patch
 
-Makes the GDB stubs work on big-endian systems such as Solaris/Sparc, by
-doing proper byteswapping.  It should be harmless elsewhere.
+Prints startup boilerplate information to stderr instead of stdout.
 
-@item bochs-2.2.6-jitter.patch
+@item bochs-2.6.11-jitter-plus-segv.patch
 
 Adds the ``jitter'' feature, in which timer interrupts are delivered at
-random intervals (@pxref{Debugging versus Testing}).
-
-@item bochs-2.2.6-triple-fault.patch
-
-Causes Bochs to break to GDB when a triple fault occurs and
-the GDB stub is active (@pxref{Triple Faults}).
-
-@item bochs-2.2.6-ms-extensions.patch
-
-Needed for Bochs to compile with GCC on some hosts.  Probably
-harmless elsewhere.
-
-@item bochs-2.2.6-solaris-tty.patch
-
-Needed for Bochs to compile in terminal support on Solaris
-hosts.  Probably harmless elsewhere.
-
-@item bochs-2.2.6-page-fault-segv.patch
-
-Makes the GDB stub report a SIGSEGV to the debugger when a page-fault
+random intervals (@pxref{Debugging versus Testing}). Also makes the
+GDB stub report a SIGSEGV to the debugger when a page-fault
 exception occurs, instead of ``signal 0.''  The former can be ignored
 with @code{handle SIGSEGV nostop} but the latter cannot.
 
-@item bochs-2.2.6-paranoia.patch
+@item bochs-2.6.11-link-tinfo.patch
 
-Fixes compile error with modern versions of GCC.
 
-@item bochs-2.2.6-solaris-link.patch
-
-Needed on Solaris hosts.  Do not apply it elsewhere.
+Patches the build mechanism to include the -ltinfo library; doesn't
+change any functionality.
 @end table
 
-To apply all the patches, @command{cd} into the Bochs directory, then
-type:
-@example
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-big-endian.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-jitter.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-triple-fault.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-ms-extensions.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-solaris-tty.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-page-fault-segv.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-paranoia.patch
-patch -p1 < $PINTOSDIR/src/misc/bochs-2.2.6-solaris-link.patch
-@end example
-@noindent
-You will have to supply the proper @env{$PINTOSDIR}, of course.  You can
-use @command{patch}'s @option{--dry-run} option if you want to test
-whether the patches would apply cleanly before trying to apply them.
+The best way to build Bochs is by invoking
+@code{src/misc/bochs-2.6.11-build.sh}. This should be invoked in
+a directory containing the Bochs distribution file
+(@code{bochs-2.6.11-tar.gz}).
+The build script takes a single argument, which provides the destination
+for installation (the binaries will be placed in the @code{bin}
+subdirectory of that directory).
+The script will apply the patches and build both versions of Bochs.
 
-Sample commands to build and install Bochs for Pintos are supplied in
-@file{src/misc/bochs-2.2.6-build.sh}.
+The @code{src/misc} directory also contains patches and build scripts for
+older versions of Bochs, if desired. However, these may require
+changes elsewhere in Pintos. For example, @code{src/utils/pintos}
+had to be modified for Bochs 2.6.11; if you use an older version of
+Bochs you will need to back out those changes.

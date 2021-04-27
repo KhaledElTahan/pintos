@@ -32,6 +32,7 @@ our (@disks);			# Extra disk images to pass to simulator.
 our ($loader_fn);		# Bootstrap loader.
 our (%geometry);		# IDE disk geometry.
 our ($align);			# Partition alignment.
+our ($gdb_port) = $ENV{"GDB_PORT"} || "1234"; # Port to listen on for GDB
 
 parse_command_line ();
 prepare_scratch_disk ();
@@ -113,6 +114,8 @@ sub parse_command_line {
     $align = "bochs",
       print STDERR "warning: setting --align=bochs for Bochs support\n"
 	if $sim eq 'bochs' && defined ($align) && $align eq 'none';
+
+    $kill_on_failure = 0;
 }
 
 # usage($exitcode).
@@ -561,9 +564,12 @@ cpu: ips=1000000
 megs: $mem
 log: bochsout.txt
 panic: action=fatal
-user_shortcut: keys=ctrlaltdel
+# For older bochs:
+#user_shortcut: keys=ctrlaltdel
+# For more recent bochs:
+keyboard: user_shortcut=ctrl-alt-del
 EOF
-    print BOCHSRC "gdbstub: enabled=1\n" if $debug eq 'gdb';
+    print BOCHSRC "gdbstub: enabled=1, port=$gdb_port\n" if $debug eq 'gdb';
     print BOCHSRC "clock: sync=", $realtime ? 'realtime' : 'none',
       ", time0=0\n";
     print BOCHSRC "ata1: enabled=1, ioaddr1=0x170, ioaddr2=0x370, irq=15\n"
@@ -621,16 +627,23 @@ sub run_qemu {
     my (@cmd) = ('qemu-system-i386');
     push (@cmd, '-device', 'isa-debug-exit');
 
-    push (@cmd, '-hda', $disks[0]) if defined $disks[0];
-    push (@cmd, '-hdb', $disks[1]) if defined $disks[1];
-    push (@cmd, '-hdc', $disks[2]) if defined $disks[2];
-    push (@cmd, '-hdd', $disks[3]) if defined $disks[3];
+    my ($i);
+    for ($i = 0; $i < 4; $i++) {
+	if (defined $disks[$i]) {
+	    push (@cmd, '-drive');
+	    push (@cmd, "file=$disks[$i],format=raw,index=$i,media=disk");
+	}
+    }
+#    push (@cmd, '-hda', $disks[0]) if defined $disks[0];
+#    push (@cmd, '-hdb', $disks[1]) if defined $disks[1];
+#    push (@cmd, '-hdc', $disks[2]) if defined $disks[2];
+#    push (@cmd, '-hdd', $disks[3]) if defined $disks[3];
     push (@cmd, '-m', $mem);
     push (@cmd, '-net', 'none');
     push (@cmd, '-nographic') if $vga eq 'none';
     push (@cmd, '-serial', 'stdio') if $serial && $vga ne 'none';
     push (@cmd, '-S') if $debug eq 'monitor';
-    push (@cmd, '-s', '-S') if $debug eq 'gdb';
+    push (@cmd, '-gdb', "tcp::$gdb_port", '-S') if $debug eq 'gdb';
     push (@cmd, '-monitor', 'null') if $vga eq 'none' && $debug eq 'none';
     run_command (@cmd);
 }
