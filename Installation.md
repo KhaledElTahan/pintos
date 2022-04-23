@@ -237,8 +237,8 @@ Point to qemu in pintos perl script
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
-line 103: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
-line 621: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
+line 104: from $sim = "bochs" if !defined $sim; to $sim = "qemu" if !defined $sim;.
+line 627: from my (@cmd) = ('qemu-system-i386'); to my (@cmd) = ('qemu');
 ```
 
 Now you need to do **only** the part related to the phase you're currently working on.
@@ -263,7 +263,7 @@ Point to phase 1's kernel & loader in `pintos` and `pintos.pm`, by changing the 
 
 ```
 $PINTOSHOME/src/utils/pintos 
-line 257: from kernel.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
+line 260: from kernel.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/kernel.bin
 
 $PINTOSHOME/src/utils/Pintos.pm 
 line 362: from loader.bin to the absolute path pointing to it: $PINTOSHOME/src/threads/build/loader.bin
