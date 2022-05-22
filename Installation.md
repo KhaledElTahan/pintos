@@ -290,7 +290,7 @@ Disable compiler optimizations to avoid compiler optimizations on user programs'
 
 ```
 Edit $PINTOSHOME/src/Make.config
-Line 43: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
+Line 36: from "CFLAGS = -g -msoft-float -O" to "CFLAGS = -g -msoft-float -O0"
 i.e. add 0 to the end of line 43
 ```
 
@@ -305,7 +305,7 @@ Point to phase 2's kernel & loader in `pintos` and `pintos.pm`.
 
 ```
 Edit $PINTOSHOME/src/utils/pintos 
-line 257: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/kernel.bin
+line 260: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/kernel.bin
 
 Edit $PINTOSHOME/src/utils/Pintos.pm 
 line 362: from 'threads' to 'userprog': $PINTOSHOME/src/userprog/build/loader.bin
